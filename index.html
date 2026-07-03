@@ -21,7 +21,7 @@ button { margin-top: 15px; padding: 10px 25px; border: none; border-radius: 10px
 @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 .timer-container { background: rgba(255, 255, 255, 0.2); padding: 10px; border-radius: 12px; margin: 15px 0; color: white; }
 .photo-box { width: 100%; border-radius: 12px; margin-top: 15px; border: 2px solid white; display: block; }
-.typing { white-space: pre-wrap; font-size: 16px; font-weight: bold; color: white; margin-top: 10px; line-height: 1.8; text-align: center; }
+.typing { white-space: pre-wrap; font-size: 18px; font-weight: bold; color: white; margin-top: 15px; margin-bottom: 15px; line-height: 1.6; text-align: center; }
 </style>
 </head>
 
@@ -45,7 +45,6 @@ button { margin-top: 15px; padding: 10px 25px; border: none; border-radius: 10px
         <div id="timer" style="font-size:14px; font-weight:bold;">Calculating...</div>
       </div>
       
-      <!-- စာသားအသစ်များ ကျလာမည့်နေရာ -->
       <div id="typing" class="typing"></div>
 
       <img src="IMG_20260121_210329_613.jpg" class="photo-box" alt="Our Memory">
@@ -55,34 +54,8 @@ button { margin-top: 15px; padding: 10px 25px; border: none; border-radius: 10px
 </div>
 
 <script>
-// အစ်ကို့ရဲ့ "အလှပဆုံးသောနွေ" စာသားများ သီးသန့်ဖြစ်သည်
-const loveLines = [
-  "အလှပဆုံးသောနွေ",
-  "သို့",
-  "အမုန်းဆုံးသော နွေရာသီ",
-  "",
-  "အပိုင်း ၁",
-  "",
-  "' နွေ ' ဆိုတဲ့ နာမည်လေးဟာ တစ်လုံးတည်းပါ။ဒါပေမဲ့ တစ်ဘဝစာ ဆွဲငင်နိုင်တဲ့အထိ သတ္တိတွေပြည့်နေတယ်။",
-  "",
-  "ဆောင်းခိုနေတဲ့ ဥဩငှက်‌‌တွေထက် အခုအချိန်မှာ အကြားချင်ဆုံးက ' နွေ ' ဆိုနေကြ သီချင်းလေးပေါ့။",
-  "",
-  "ဒီအချိန်ဆို ဝယ်စားနေကြ ရေခဲမုန့်သည် ဦးလေးကြီးတောင် နောက်ကျနေတယ်။ဈေးအမြဲဆစ်နေကြ သူ မပါလို့များလား။",
-  "",
-  "အားအင်ကုန်ခမ်းသွားတဲ့ ရွက်အိုတွေက အကို့မျက်စိရှေ့မှာတင် လေတိုက်ရာနောက် ကြွေကြတယ်။ နင်းခြေခံရတယ်။ အသစ်တစ်ဖန်မွေးဖွားလာတယ်။",
-  "",
-  "' နွေ ' ပြောနေကျ သဘာဝတရားဆိုတာ ဒါများလား။",
-  "",
-  "အကို့ပခုံးပေါ် ကြွေကျလာတဲ့ တမာရွက်လေးနေရာမှာ ' နွေ ' ခေါင်းလေး အစားထိုးလို့ရရင် သိပ်ကောင်းမှာပဲ",
-  "",
-  "( ဒါမှမဟုတ် ) ' နွေ ' သာဆိုရင် ကံကောင်းစေတဲ့ အဆောင်ဆိုပြီး စာအုပ်ကြားလေးထဲ ညှပ်ထားမလား။",
-  "",
-  "တစ်နှစ်နီးပါး တူတူထိုင်လာတဲ့ သစ်သားခုံလေးက ဒီနေ့မှ မညီပါလား။",
-  "",
-  "' နွေ ' မရှိကတည်းက များလိုက်တဲ့ လိုအပ်ချက်တွေ။",
-  "",
-  "တစ်ယောက်တည်းနေဖို့ အဆင်သင့် မဖြစ်သေးဘူး ထင်ပါရဲ့။"
-];
+// အစ်ကို့ရဲ့ စာတစ်ကြောင်းတည်းကိုပဲ ထည့်သွင်းပေးထားပါတယ်
+const myLoveMessage = "အရမ်းချစ်တယ် သဲတုန်းလေး ❤️";
 
 function checkPass() {
   if (document.getElementById("pass").value.trim() === "7.10.2024") { 
@@ -95,24 +68,24 @@ function checkPass() {
 function openLetter() {
   document.getElementById("envelope").style.display = "none";
   document.getElementById("actual-content").style.display = "block";
-  typeSequence();
+  typeText(myLoveMessage);
   startTimer();
   startFallingHearts();
 }
 
-async function typeSequence() {
-  const el = document.getElementById("typing");
-  el.innerHTML = ""; // ရှင်းလင်းရေးလုပ်သည်
-  for (let line of loveLines) {
-    let p = document.createElement("p");
-    p.style.margin = "6px 0";
-    el.appendChild(p);
-    for (let char of line) {
-      p.innerHTML += char;
-      await new Promise(r => setTimeout(r, 50)); 
+// စာတစ်ကြောင်းတည်းကို စတိုင်ကျကျ ရိုက်ပြမည့် Function
+function typeText(text) {
+  let i = 0;
+  let el = document.getElementById("typing");
+  el.innerHTML = ""; 
+  function typing() {
+    if (i < text.length) {
+      el.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typing, 120); // စာလုံးရိုက်နှုန်း
     }
-    await new Promise(r => setTimeout(r, 1000)); // ၁ စက္ကန့်ခြားသည်
   }
+  typing();
 }
 
 function startTimer() {
