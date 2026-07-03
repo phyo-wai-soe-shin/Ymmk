@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Secret Letter</title>
 
   <style>
@@ -10,7 +12,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: Arial;
+      font-family: Arial, sans-serif;
 
       /* 🌌 Background */
       background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #1b1b2f);
@@ -31,7 +33,10 @@
       padding: 30px;
       border-radius: 15px;
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      width: 80%;
+      max-width: 320px;
     }
 
     input {
@@ -40,13 +45,18 @@
       border-radius: 8px;
       outline: none;
       margin-top: 10px;
+      width: 80%;
+      text-align: center;
     }
 
     button {
-      padding: 10px 15px;
-      margin-top: 10px;
+      padding: 10px 20px;
+      margin-top: 15px;
       border: none;
       border-radius: 8px;
+      background-color: #ffffff;
+      color: #302b63;
+      font-weight: bold;
       cursor: pointer;
     }
 
@@ -76,9 +86,10 @@
 
 <script>
 function check(){
-  var pass = document.getElementById("pw").value;
+  // .trim() ထည့်ထားလို့ အရှေ့အနောက် space ပါရင် အလိုအလျောက် ဖြတ်ပေးပါတယ်
+  var pass = document.getElementById("pw").value.trim();
 
-  if(pass == "7.10.2024"){
+  if(pass === "7.10.2024"){
     document.getElementById("letter").style.display = "block";
   } else {
     alert("Wrong password");
