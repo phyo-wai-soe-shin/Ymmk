@@ -3,7 +3,8 @@
 <head>
   <title>Secret Letter</title>
 </head>
-<body style="text-align:center; font-family:Arial;">
+<!-- ဒီမှာ Background အရောင်ပြေးလှလှလေး ပြောင်းလဲထားပါတယ် -->
+<body style="text-align:center; font-family:Arial, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); height: 100vh; margin: 0; padding-top: 50px;">
 
 <h2>Enter Password</h2>
 
@@ -15,13 +16,22 @@
   <p>
     အရမ်းချစ်တယ် ယွန်းမီမီကို
   </p>
+
+  <!-- စကားဝှက်မှန်မှ သီချင်းဖွင့်စနစ် ပေါ်လာစေမယ့်နေရာ -->
+  <div style="margin-top: 20px;">
+    <audio controls autoplay loop>
+      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+      သင့် Browser က သီချင်းဖွင့်စနစ်ကို အထောက်အပံ့မပြုပါ။
+    </audio>
+  </div>
 </div>
 
 <script>
 function check(){
   var pass = document.getElementById("pw").value;
 
-  if(pass == 7.10.2024){   // 👈 ဒီမှာ password ပြောင်း
+  // သတိပြုရန် - Password ကို မျက်တောင်ဖွင့်ပိတ် (" ") ထဲ ထည့်ပေးရပါမယ်
+  if(pass == "7.10.2024"){   
     document.getElementById("letter").style.display = "block";
   } else {
     alert("Wrong password");
