@@ -23,62 +23,128 @@ body {
   100% {filter: hue-rotate(40deg);}
 }
 
-/* floating hearts */
+/* Floating & Falling Hearts */
 .heart {
   position: absolute;
   color: rgba(255,255,255,0.7);
-  animation: float 6s linear infinite;
+  z-index: 1;
+}
+.float-up { animation: floatUp 6s linear infinite; }
+.fall-down { animation: fallDown 4s linear infinite; }
+
+@keyframes floatUp {
+  0% {transform: translateY(100vh) scale(0.5); opacity: 0;}
+  10% {opacity: 1;}
+  100% {transform: translateY(-10vh) scale(1.2); opacity: 0;}
 }
 
-@keyframes float {
-  0% {transform: translateY(100vh) scale(0.5);}
-  100% {transform: translateY(-10vh) scale(1.2);}
+@keyframes fallDown {
+  0% {transform: translateY(-10vh) rotate(0deg); opacity: 1;}
+  100% {transform: translateY(110vh) rotate(360deg); opacity: 0;}
 }
 
 .box {
   background: rgba(255,255,255,0.15);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  padding: 30px;
+  padding: 30px 20px;
   border-radius: 20px;
   text-align: center;
-  width: 320px;
+  width: 90%;
+  max-width: 340px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   z-index: 10;
+  border: 1px solid rgba(255,255,255,0.2);
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
-h2 {color: white;}
+h2 { color: white; margin-top: 0; }
 
 input {
-  padding: 10px;
+  padding: 12px;
   width: 90%;
   border: none;
   border-radius: 10px;
   margin-top: 10px;
   text-align: center;
+  font-size: 16px;
 }
 
 button {
   margin-top: 15px;
-  padding: 10px 20px;
+  padding: 10px 25px;
   border: none;
   border-radius: 10px;
   background: #ff4d6d;
   color: white;
   font-weight: bold;
+  font-size: 16px;
   cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-.message {
+.message-container {
   display: none;
   margin-top: 15px;
+}
+
+/* 💌 Interactive Envelope Style */
+.envelope-wrapper {
+  margin: 20px auto;
+  cursor: pointer;
+  display: inline-block;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.envelope-icon {
+  font-size: 65px;
+}
+
+/* ⏳ Timer Style */
+.timer-container {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 12px;
+  border-radius: 12px;
+  margin: 15px 0;
   color: white;
-  font-size: 18px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.timer-title {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+  opacity: 0.9;
+}
+
+.timer-display {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* 📸 Image Block */
+.photo-box {
+  width: 100%;
+  border-radius: 12px;
+  margin-top: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  border: 2px solid white;
 }
 
 .typing {
   white-space: pre-wrap;
   display: inline-block;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  margin-top: 10px;
 }
 </style>
 </head>
@@ -86,46 +152,61 @@ button {
 <body>
 
 <div class="box">
-  <h2>💌 Enter Password</h2>
-  <input type="password" id="pass" placeholder="Enter password">
-  <br>
-  <button onclick="checkPass()">Open</button>
+  <div id="login-section">
+    <h2>💌 Enter Password</h2>
+    <input type="password" id="pass" placeholder="Enter password">
+    <br>
+    <button onclick="checkPass()">Open</button>
+  </div>
 
-  <div class="message" id="msg">
-    <h3>✨ Secret Message</h3>
-    <div id="typing" class="typing"></div>
+  <div class="message-container" id="msg-container">
+    <!-- အဆင့် ၁ - စာအိတ်လေး အရင်ပေါ်မည် -->
+    <div class="envelope-wrapper" id="envelope" onclick="openLetter()">
+      <div class="envelope-icon">✉️</div>
+      <p style="color:white; font-size:14px; margin:5px 0 0 0;">နှိပ်ပြီး ဖွင့်ဖတ်ပါ 💖</p>
+    </div>
 
-    <br><br>
+    <!-- အဆင့် ၂ - စာအိတ်နှိပ်မှ ပွင့်လာမည့်အကွက် -->
+    <div id="actual-content" style="display: none;">
+      <h3>✨ Our Memories ✨</h3>
+      
+      <!-- ⏳ ချစ်သူသက်တမ်း Timer -->
+      <div class="timer-container">
+        <div class="timer-title">💕 ချစ်သူသက်တမ်း 💕</div>
+        <div id="timer" class="timer-display">Calculating...</div>
+      </div>
 
-    <!-- 🎧 အစ်ကိုပေးထားတဲ့ သီချင်းလင့်ခ်ကို ကွက်တိထည့်ပေးထားပါတယ် -->
-    <audio id="myAudio" loop>
-      <source src="https://files.catbox.moe/n0ynm3.mp3" type="audio/mpeg">
-      သင့် Browser က သီချင်းဖွင့်စနစ်ကို အထောက်အပံ့မပြုပါ။
-    </audio>
+      <div id="typing" class="typing"></div>
+
+      <!-- 📸 ဓာတ်ပုံနေရာ (GIF စုံတွဲပုံ ထည့်ပေးထားပါတယ်) -->
+      <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXN6ZnN5OHBqdGg3ajZndnF3Ym95bnd4NmR4cm95Z3I0ZmswOHRjbSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/14ur7lOQDURvY4/giphy.gif" class="photo-box" alt="Love Photo">
+
+      <br><br>
+      <audio id="myAudio" loop>
+        <source src="https://files.catbox.moe/n0ynm3.mp3" type="audio/mpeg">
+      </audio>
+    </div>
   </div>
 </div>
 
 <script>
 let attempts = 0;
+let heartInterval;
 
 function checkPass() {
   let p = document.getElementById("pass").value.trim();
 
-  // စကားဝှက်ကို 7.10.2024 လို့ ထည့်သွင်းထားပါတယ်
   if (p === "7.10.2024") { 
-    document.getElementById("msg").style.display = "block";
-    typeText("အရမ်းချစ်တယ် သဲတုန်း ❤️");
+    document.getElementById("login-section").style.display = "none";
+    document.getElementById("msg-container").style.display = "block";
     
-    // Password မှန်တာနဲ့ သီချင်းတန်းပွင့်မယ့်စနစ်
+    // 🎵 သီချင်းတန်းဖွင့်ခြင်း
     let audio = document.getElementById("myAudio");
-    audio.play().catch(function(error) {
-       console.log("Auto-play blocked", error);
-    });
+    audio.play().catch(e => console.log("Auto-play blocked"));
 
   } else {
     attempts++;
     alert("Wrong password 💔");
-
     if (attempts >= 3) {
       alert("Too many attempts 😢");
       document.getElementById("pass").disabled = true;
@@ -133,12 +214,45 @@ function checkPass() {
   }
 }
 
-// typing effect
+// 💌 စာအိတ်ဖွင့်ချိန် လုပ်ဆောင်ချက်များ
+function openLetter() {
+  document.getElementById("envelope").style.display = "none";
+  document.getElementById("actual-content").style.display = "block";
+  
+  // စာသား စရိုက်မည်
+  typeText("အရမ်းချစ်တယ် သဲတုန်း ❤️");
+  
+  // Timer စတင်မည်
+  startTimer();
+  
+  // 🎈 နှလုံးသားမိုးရွာမည့် စနစ်ပြောင်းမည်
+  clearInterval(heartInterval);
+  startFallingHearts();
+}
+
+// ⏳ Timer တွက်ချက်စနစ်
+function startTimer() {
+  const anniversary = new Date("2024-10-07T00:00:00").getTime();
+  
+  setInterval(() => {
+    const now = new Date().getTime();
+    const diff = now - anniversary;
+    
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    
+    document.getElementById("timer").innerHTML = 
+      `${days} ရက်၊ ${hours} နာရီ၊ ${minutes} မိနစ်၊ ${seconds} စက္ကန့်`;
+  }, 1000);
+}
+
+// ✍️ Typing effect
 function typeText(text) {
   let i = 0;
   let el = document.getElementById("typing");
   el.innerHTML = ""; 
-
   function typing() {
     if (i < text.length) {
       el.innerHTML += text.charAt(i);
@@ -149,21 +263,35 @@ function typeText(text) {
   typing();
 }
 
-// floating hearts generator
-setInterval(() => {
+// 🎈 အောက်ကနေအပေါ်တက်မည့် နှလုံးသားများ (ပထမမြင်ကွင်းအတွက်)
+function startFloatingHearts() {
+  heartInterval = setInterval(() => {
+    createHeart("float-up", "💖");
+  }, 400);
+}
+startFloatingHearts();
+
+// 🌧 အပေါ်ကနေအောက်ကျမည့် နှလုံးသားများ (Password မှန်ပြီး စာအိတ်ဖွင့်ချိန်အတွက်)
+function startFallingHearts() {
+  setInterval(() => {
+    createHeart("fall-down", "❤️");
+    createHeart("fall-down", "💖");
+  }, 200);
+}
+
+function createHeart(className, symbol) {
   let heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerHTML = "💖";
+  heart.className = `heart ${className}`;
+  heart.innerHTML = symbol;
   heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = Math.random() * 20 + 10 + "px";
+  if(className === "fall-down") {
+    heart.style.top = "-5vh";
+  }
+  heart.style.fontSize = Math.random() * 20 + 12 + "px";
   heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
-
   document.body.appendChild(heart);
-
-  setTimeout(() => {
-    heart.remove();
-  }, 6000);
-}, 300);
+  setTimeout(() => { heart.remove(); }, 6000);
+}
 </script>
 
 </body>
