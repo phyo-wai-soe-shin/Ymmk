@@ -3,38 +3,28 @@
 <head>
   <title>Secret Letter</title>
 </head>
-<body style="text-align:center; font-family:Arial, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); height: 100vh; margin: 0; padding-top: 50px;">
+<body style="text-align:center; font-family:Arial;">
 
 <h2>Enter Password</h2>
 
-<!-- input နေရာမှာ string အဖြစ် ဖတ်ရလွယ်အောင် လုပ်ထားပါတယ် -->
-<input type="text" id="pw" placeholder="ရက်စွဲရိုက်ထည့်ပါ">
+<input type="password" id="pw">
 <button onclick="check()">Open</button>
 
 <div id="letter" style="display:none; margin-top:20px;">
   <h3>💌 Secret Message</h3>
   <p>
-    အရမ်းချစ်တယ် ယွန်းမီမီကို
+    ဒီအရမ်းချစ်တယ် သဲတုန်းလေး
   </p>
-
-  <div style="margin-top: 20px;">
-    <audio controls autoplay loop>
-      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-      သင့် Browser က သီချင်းဖွင့်စနစ်ကို အထောက်အပံ့မပြုပါ။
-    </audio>
-  </div>
 </div>
 
 <script>
 function check(){
-  // ရိုက်ထည့်လိုက်တဲ့ စာသားကို trim() သုံးပြီး ရှေ့နောက် space တွေကို အလိုအလျောက် ဖြတ်ခိုင်းထားပါတယ်
-  var pass = document.getElementById("pw").value.trim();
+  var pass = document.getElementById("pw").value;
 
-  // စာသားအဖြစ် အသေအချာ မျက်တောင်ဖွင့်ပိတ်ထဲ ထည့်စစ်ထားပါတယ်
-  if(pass === 7.10.2024){   
+  if(pass == "7.10.2024"){   // 👈 ဒီမှာ password ပြောင်း
     document.getElementById("letter").style.display = "block";
   } else {
-    alert("Wrong password! စကားဝှက် မှားနေပါတယ်။");
+    alert("Wrong password");
   }
 }
 </script>
