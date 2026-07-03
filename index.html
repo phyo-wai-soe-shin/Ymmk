@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Secret Letter</title>
+</head>
+<body style="text-align:center; font-family:Arial;">
+
+<h2>Enter Password</h2>
+
+<input type="password" id="pw">
+<button onclick="check()">Open</button>
+
+<div id="letter" style="display:none; margin-top:20px;">
+  <h3>💌 Secret Message</h3>
+  <p>
+    ဒီစာကို မင်းဖတ်နိုင်တာက မင်း password မှန်လို့ပဲ...
+  </p>
+</div>
+
+<script>
+function check(){
+  var pass = document.getElementById("pw").value;
+
+  if(pass == "7.10.2024"){   // 👈 ဒီမှာ password ပြောင်း
+    document.getElementById("letter").style.display = "block";
+  } else {
+    alert("Wrong password");
+  }
+}
+</script>
+
+</body>
+</html>
