@@ -1,30 +1,84 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Secret Letter</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial;
+
+      /* 🌌 Background */
+      background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #1b1b2f);
+      background-size: 400% 400%;
+      animation: gradient 10s ease infinite;
+      color: white;
+      text-align: center;
+    }
+
+    @keyframes gradient {
+      0% {background-position:0% 50%;}
+      50% {background-position:100% 50%;}
+      100% {background-position:0% 50%;}
+    }
+
+    .box {
+      background: rgba(255,255,255,0.08);
+      padding: 30px;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    input {
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+      margin-top: 10px;
+    }
+
+    button {
+      padding: 10px 15px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #letter {
+      display: none;
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
 </head>
-<!-- နောက်ခံကို မျက်စိအေးစေမယ့် မိုးပြာရောင်/အပြာနုရောင်စပ်ကြား (Sky Blue Gradient) အသေအချာ ပြောင်းပေးထားပါတယ် -->
-<body style="text-align:center; font-family:Arial, sans-serif; background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); background-attachment: fixed; min-height: 100vh; margin: 0; padding-top: 50px;">
 
-<h2>Enter Password</h2>
+<body>
 
-<input type="text" id="pw" placeholder="ရက်စွဲရိုက်ထည့်ပါ" style="padding: 5px; font-size: 16px;">
-<button onclick="check()" style="padding: 5px 10px; font-size: 16px;">Open</button>
+<div class="box">
+  <h2>💌 Enter Password</h2>
 
-<div id="letter" style="display:none; margin-top:20px;">
-  <h3>💌 Secret Message</h3>
-  <p style="font-size: 18px; font-weight: bold; color: #0369a1;">
-    ဒီအရမ်းချစ်တယ် သဲတုန်းလေး
-  </p>
+  <input type="password" id="pw"><br>
+  <button onclick="check()">Open</button>
+
+  <div id="letter">
+    <h3>✨ Secret Message</h3>
+    <p>
+      အရမ်းချစ်တယ် သဲတုန်း
+    </p>
+  </div>
 </div>
 
 <script>
 function check(){
-  var pass = document.getElementById("pw").value.trim();
+  var pass = document.getElementById("pw").value;
 
-  if(pass === "7.10.2024"){   
+  if(pass == "7.10.2024"){
     document.getElementById("letter").style.display = "block";
   } else {
     alert("Wrong password");
