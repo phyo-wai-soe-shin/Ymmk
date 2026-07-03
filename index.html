@@ -1,30 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Secret Letter</title>
 </head>
-<!-- နောက်ခံကို ပန်းရောင်နုနုနဲ့ ခရမ်းနုရောင်စပ်ကြား အရောင်ပြေး (Gradient) လှလှလေး ပြောင်းပေးထားပါတယ် -->
-<body style="text-align:center; font-family:Arial, sans-serif; background: linear-gradient(135deg, #fff5f5 0%, #e8dbfc 100%); height: 100vh; margin: 0; padding-top: 50px;">
+<!-- နောက်ခံကို မျက်စိအေးစေမယ့် မိုးပြာရောင်/အပြာနုရောင်စပ်ကြား (Sky Blue Gradient) အသေအချာ ပြောင်းပေးထားပါတယ် -->
+<body style="text-align:center; font-family:Arial, sans-serif; background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); background-attachment: fixed; min-height: 100vh; margin: 0; padding-top: 50px;">
 
 <h2>Enter Password</h2>
 
-<!-- စာရိုက်ရ ပိုအဆင်ပြေအောင် type="text" ပြောင်းထားပြီး placeholder ထည့်ပေးထားပါတယ် -->
-<input type="text" id="pw" placeholder="ရက်စွဲရိုက်ထည့်ပါ">
-<button onclick="check()">Open</button>
+<input type="text" id="pw" placeholder="ရက်စွဲရိုက်ထည့်ပါ" style="padding: 5px; font-size: 16px;">
+<button onclick="check()" style="padding: 5px 10px; font-size: 16px;">Open</button>
 
 <div id="letter" style="display:none; margin-top:20px;">
   <h3>💌 Secret Message</h3>
-  <p>
+  <p style="font-size: 18px; font-weight: bold; color: #0369a1;">
     ဒီအရမ်းချစ်တယ် သဲတုန်းလေး
   </p>
 </div>
 
 <script>
 function check(){
-  // ရိုက်ထည့်တဲ့အခါ အရှေ့အနောက် space ပါသွားရင် အလိုအလျောက် ဖြတ်ပေးမယ့်စနစ် ထည့်ထားပါတယ်
   var pass = document.getElementById("pw").value.trim();
 
-  // Password ကတော့ အစ်ကို သတ်မှတ်ထားတဲ့အတိုင်း "7.10.2024" ပါပဲဗျာ
   if(pass === "7.10.2024"){   
     document.getElementById("letter").style.display = "block";
   } else {
