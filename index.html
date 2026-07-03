@@ -3,11 +3,13 @@
 <head>
   <title>Secret Letter</title>
 </head>
-<body style="text-align:center; font-family:Arial;">
+<!-- နောက်ခံကို ပန်းရောင်နုနုနဲ့ ခရမ်းနုရောင်စပ်ကြား အရောင်ပြေး (Gradient) လှလှလေး ပြောင်းပေးထားပါတယ် -->
+<body style="text-align:center; font-family:Arial, sans-serif; background: linear-gradient(135deg, #fff5f5 0%, #e8dbfc 100%); height: 100vh; margin: 0; padding-top: 50px;">
 
 <h2>Enter Password</h2>
 
-<input type="password" id="pw">
+<!-- စာရိုက်ရ ပိုအဆင်ပြေအောင် type="text" ပြောင်းထားပြီး placeholder ထည့်ပေးထားပါတယ် -->
+<input type="text" id="pw" placeholder="ရက်စွဲရိုက်ထည့်ပါ">
 <button onclick="check()">Open</button>
 
 <div id="letter" style="display:none; margin-top:20px;">
@@ -19,9 +21,11 @@
 
 <script>
 function check(){
-  var pass = document.getElementById("pw").value;
+  // ရိုက်ထည့်တဲ့အခါ အရှေ့အနောက် space ပါသွားရင် အလိုအလျောက် ဖြတ်ပေးမယ့်စနစ် ထည့်ထားပါတယ်
+  var pass = document.getElementById("pw").value.trim();
 
-  if(pass == "7.10.2024"){   // 👈 ဒီမှာ password ပြောင်း
+  // Password ကတော့ အစ်ကို သတ်မှတ်ထားတဲ့အတိုင်း "7.10.2024" ပါပဲဗျာ
+  if(pass === "7.10.2024"){   
     document.getElementById("letter").style.display = "block";
   } else {
     alert("Wrong password");
