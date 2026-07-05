@@ -9,8 +9,11 @@
 body { margin: 0; height: 100vh; overflow: hidden; display: flex; justify-content: center; align-items: center; font-family: Arial, sans-serif; background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb); animation: bg 6s infinite alternate; }
 @keyframes bg { 0% {filter: hue-rotate(0deg);} 100% {filter: hue-rotate(40deg);} }
 .heart { position: absolute; color: rgba(255,255,255,0.7); z-index: 1; pointer-events: none; }
-.fall-down { animation: fallDown 8s linear infinite; }
-@keyframes fallDown { 0% {transform: translateY(-10vh) rotate(0deg); opacity: 1;} 100% {transform: translateY(110vh) rotate(360deg); opacity: 0;} }
+
+/* အသဲပုံလေးတွေ အောက်ကနေ အပေါ်ကို လွင့်တက်မည့် Animation */
+.float-up { animation: floatUp 8s linear infinite; }
+@keyframes floatUp { 0% {transform: translateY(110vh) rotate(0deg); opacity: 0;} 10% {opacity: 1;} 100% {transform: translateY(-10vh) rotate(360deg); opacity: 0;} }
+
 .box { background: rgba(255,255,255,0.15); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 30px 20px; border-radius: 20px; text-align: center; width: 90%; max-width: 340px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 10; border: 1px solid rgba(255,255,255,0.2); max-height: 85vh; overflow-y: auto; }
 .box::-webkit-scrollbar { display: none; }
 h2 { color: white; margin-top: 0; }
@@ -54,8 +57,12 @@ button { margin-top: 15px; padding: 10px 25px; border: none; border-radius: 10px
 </div>
 
 <script>
-// အစ်ကို့ရဲ့ စာတစ်ကြောင်းတည်းကိုပဲ ထည့်သွင်းပေးထားပါတယ်
 const myLoveMessage = "အရမ်းချစ်တယ် သဲတုန်းလေး ❤️";
+
+// Web Page စဖွင့်ကတည်းက အသဲပုံလေးတွေ တက်လာအောင် လုပ်ထားခြင်း
+window.onload = function() {
+  startFallingHearts();
+};
 
 function checkPass() {
   if (document.getElementById("pass").value.trim() === "7.10.2024") { 
@@ -70,10 +77,8 @@ function openLetter() {
   document.getElementById("actual-content").style.display = "block";
   typeText(myLoveMessage);
   startTimer();
-  startFallingHearts();
 }
 
-// စာတစ်ကြောင်းတည်းကို စတိုင်ကျကျ ရိုက်ပြမည့် Function
 function typeText(text) {
   let i = 0;
   let el = document.getElementById("typing");
@@ -82,7 +87,7 @@ function typeText(text) {
     if (i < text.length) {
       el.innerHTML += text.charAt(i);
       i++;
-      setTimeout(typing, 120); // စာလုံးရိုက်နှုန်း
+      setTimeout(typing, 120); 
     }
   }
   typing();
@@ -99,13 +104,14 @@ function startTimer() {
   }, 1000);
 }
 
+// အောက်ခြေကနေ အပေါ်ကို ပျံတက်မည့် အသဲပုံ Function
 function startFallingHearts() {
   setInterval(() => {
     let h = document.createElement("div");
-    h.className = "heart fall-down";
+    h.className = "heart float-up"; // class name ပြောင်းလဲထားပါတယ်
     h.innerHTML = Math.random() > 0.5 ? "❤️" : "💖";
     h.style.left = Math.random() * 100 + "vw";
-    h.style.top = "-5vh";
+    h.style.top = "100vh"; // အောက်ခြေကနေ စပွင့်အောင် လုပ်ထားပါတယ်
     h.style.animationDuration = (Math.random() * 4 + 6) + "s";
     document.body.appendChild(h);
     setTimeout(() => h.remove(), 9000);
